@@ -2,8 +2,8 @@ Hello,
 
 So for my first project, I thought a simple calculator that performs basic operations such as addition, division, and mean is a good start. 
 The code uses functions that are passed by reference to execute the desired operation, when called in main(). Furthermore, I made it to be 
-very user interactive; it asks the user what operation they would like to perform. To select an operation, I used to case switch method since 
-it is easier to implement and follow as a reader/debugger. I'm planning on implementing the same idea in Java soon. 
+very user interactive; it asks the user what operation they would like to perform. To select an operation, I used the case switch method since 
+it is easier to implement and follow as a reader/debugger.  
 
 Thanks!
 Elhadi

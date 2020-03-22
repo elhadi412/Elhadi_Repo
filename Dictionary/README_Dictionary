@@ -1,7 +1,8 @@
 Dictionary.java is an interactive spelling bee like sort of game. The user is
 provided with the definition and length of a word. Given these two 
 hints, the user then tries to "guess" what the word is by inputing one 
-letter at a time. Moreover, a sequence of dashes is shown to the user and will
+letter at a time. The letters must be input in lowercase form. 
+Moreover, a sequence of dashes is shown to the user and will
 be filled by correct letters the user guesses. The number of dashes equals
 the number of letters in the word. User also has 3 tries to guess
 incorrectly. 

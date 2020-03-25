@@ -31,7 +31,7 @@ public class Application {
 	private JButton divide;
 	private JButton zeroBtn;
 	private int roller = 0000;
-	private int finalAnswer;
+	private float finalAnswer;
 	private JButton btnClr;
 
 	/**
@@ -82,14 +82,14 @@ public class Application {
 		add.setForeground(new Color(51, 153, 153));
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int num1, num2,ans;
+				float num1, num2,ans;
 
 				try{
 					num1 = Integer.parseInt(textFieldNum1.getText());
 					num2 = Integer.parseInt(textFieldNum2.getText());
 					ans = num1 + num2;
 					finalAnswer = ans;
-					answer.setText(Integer.toString(ans));
+					answer.setText(Float.toString(num1) + " + " + Float.toString(num2) + " = " + Float.toString(ans));
 					
 				}
 				catch (Exception e1) {
@@ -105,7 +105,7 @@ public class Application {
 		subtract = new JButton("SUB");
 		subtract.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int num1, num2, ans;
+				float num1, num2, ans;
 			
 				
 				try{
@@ -113,7 +113,7 @@ public class Application {
 					num2 = Integer.parseInt(textFieldNum2.getText());
 					ans = num1 - num2;
 					finalAnswer = ans;
-					answer.setText(Integer.toString(ans));
+					answer.setText(Float.toString(num1) + " - " + Float.toString(num2) + " = " + Float.toString(ans));
 					
 					
 				}
@@ -367,14 +367,14 @@ public class Application {
 		multiply = new JButton("MUL");
 		multiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int num1,num2,ans;
+				float num1,num2,ans;
 				try {
 					
 					num1 = Integer.parseInt(textFieldNum1.getText());
 					num2 = Integer.parseInt(textFieldNum2.getText());
 					ans = num1 * num2;
 					finalAnswer = ans;
-					answer.setText(Integer.toString(ans));
+					answer.setText(Float.toString(num1) + " * " + Float.toString(num2) + " = " + Float.toString(ans));
 					
 				} catch (Exception e2) {
 					// TODO: handle exception
@@ -390,20 +390,20 @@ public class Application {
 		divide = new JButton("DIV");
 		divide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int num1, num2=0;
-				double ans;
+				float num1, num2=(float) 0.0;
+				float ans;
 
 				try{
 					num1 = Integer.parseInt(textFieldNum1.getText());
 					num2 = Integer.parseInt(textFieldNum2.getText());
 					ans = num1 / num2;
-					//finalAnswer = ans;
-					answer.setText(Double.toString(ans));
+					finalAnswer = ans;
+					answer.setText(Float.toString(num1) + " / " + Float.toString(num2) + " = " + Float.toString(ans));
 					
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
-					if(num2==0){
+					if(num2==0.0){
 						JOptionPane.showMessageDialog(null, "Undefined");
 					}
 					JOptionPane.showMessageDialog(null, "Please Enter Valid Number");

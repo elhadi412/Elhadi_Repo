@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
@@ -11,15 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.SystemColor;
 
-public class Application {
+public class Calculy {
 
 	private JFrame frame;
-	private JTextField textFieldNum1;
-	private JTextField textFieldNum2;
 	private JButton add;
 	private JButton subtract;
 	private JTextField answer;
-	private JLabel answerLbl;
 	private JLabel lblElhadisCalculator;
 	private JButton fourBtn;
 	private JButton fiveBtn;
@@ -31,9 +31,12 @@ public class Application {
 	private JButton divide;
 	private JButton zeroBtn;
 	private int roller = 0000;
-	private float finalAnswer;
+	private int finalAnswer;
 	private JButton btnClr;
-
+	private int num1=0, ans=0;
+	int num2 = 0;
+	private int index = 0;
+	private Stack<Integer> answerStack = new Stack<>();
 	/**
 	 * Launch the application.
 	 */
@@ -41,7 +44,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
+					Calculy window = new Calculy();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +56,7 @@ public class Application {
 	/**
 	 * Create the application.
 	 */
-	public Application() {
+	public Calculy() {
 		initialize();
 	}
 
@@ -67,35 +70,37 @@ public class Application {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		textFieldNum1 = new JTextField();
-		textFieldNum1.setBounds(73, 76, 107, 29);
-		frame.getContentPane().add(textFieldNum1);
-		textFieldNum1.setColumns(10);
-		
-		textFieldNum2 = new JTextField();
-		textFieldNum2.setBounds(213, 76, 107, 29);
-		frame.getContentPane().add(textFieldNum2);
-		textFieldNum2.setColumns(10);
 		
 		//ADD Button
 		add = new JButton("ADD");
 		add.setForeground(new Color(51, 153, 153));
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				float num1, num2,ans;
+				
 
 				try{
-					num1 = Integer.parseInt(textFieldNum1.getText());
-					num2 = Integer.parseInt(textFieldNum2.getText());
-					ans = num1 + num2;
-					finalAnswer = ans;
-					answer.setText(Float.toString(num1) + " + " + Float.toString(num2) + " = " + Float.toString(ans));
+//					
+					answer.setText(answer.getText() + " + ");
+						
+					index = answer.getText().toString().indexOf("+");
+					System.out.println("Index: " + index);
+					
+					if(index==1){
+						JOptionPane.showMessageDialog(null, "MUST ENTER 1st Number");
+						answer.setText("");
+					}
+					else{
+						num1 = Integer.parseInt(answer.getText().substring(0,index-1));
+						System.out.println("NUM1: " + num1);
+					}
 					
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
-					JOptionPane.showMessageDialog(null, "Please Enter Valid Number");
+					//JOptionPane.showMessageDialog(null, "Please Enter Valid Number");
+					e1.printStackTrace();
 				}
+				
 			}
 		});
 		add.setBounds(6, 117, 84, 29);
@@ -109,11 +114,19 @@ public class Application {
 			
 				
 				try{
-					num1 = Integer.parseInt(textFieldNum1.getText());
-					num2 = Integer.parseInt(textFieldNum2.getText());
-					ans = num1 - num2;
-					finalAnswer = ans;
-					answer.setText(Float.toString(num1) + " - " + Float.toString(num2) + " = " + Float.toString(ans));
+					answer.setText(answer.getText() + " - ");
+					
+					index = answer.getText().toString().indexOf("-");
+					System.out.println("Index: " + index);
+					
+					if(index==1){
+						JOptionPane.showMessageDialog(null, "MUST ENTER 1st Number");
+						answer.setText("");
+					}
+					else{
+						num1 = Integer.parseInt(answer.getText().substring(0,index-1));
+						System.out.println("NUM1: " + num1);
+					}
 					
 					
 				}
@@ -129,16 +142,9 @@ public class Application {
 		frame.getContentPane().add(subtract);
 		
 		answer = new JTextField();
-		answer.setBounds(81, 22, 239, 42);
+		answer.setBounds(81, 48, 239, 42);
 		frame.getContentPane().add(answer);
 		answer.setColumns(10);
-		
-		answerLbl = new JLabel("Answer");
-		answerLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		answerLbl.setBackground(Color.WHITE);
-		answerLbl.setForeground(new Color(173, 255, 47));
-		answerLbl.setBounds(19, 34, 61, 16);
-		frame.getContentPane().add(answerLbl);
 		
 		lblElhadisCalculator = new JLabel("Elhadi's Calculator");
 		lblElhadisCalculator.setFont(new Font("Apple Chancery", Font.PLAIN, 16));
@@ -152,14 +158,16 @@ public class Application {
 			public void actionPerformed(ActionEvent e) {
 				
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("1");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("1");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("1");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("1");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"1");
+					
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -174,14 +182,16 @@ public class Application {
 		twoBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("2");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("2");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("2");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("2");
+//						roller = 0000;
+//					}\
+					answer.setText(answer.getText() +"2");
+
 				}
 				
 				catch (Exception e1) {
@@ -199,14 +209,16 @@ public class Application {
 		threeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("3");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("3");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("3");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("3");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"3");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -223,14 +235,16 @@ public class Application {
 		fourBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("4");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("4");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("4");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("4");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"4");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -247,14 +261,16 @@ public class Application {
 		fiveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("5");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("5");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("5");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("5");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"5");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -271,14 +287,16 @@ public class Application {
 		sixBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("6");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("6");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("6");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("6");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"6");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -295,14 +313,16 @@ public class Application {
 		sevenBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("7");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("7");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("7");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("7");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"7");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -320,14 +340,16 @@ public class Application {
 		eightBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("8");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("8");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("8");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("8");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"8");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -344,14 +366,16 @@ public class Application {
 		nineBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("9");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("9");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("9");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("9");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"9");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -370,11 +394,19 @@ public class Application {
 				float num1,num2,ans;
 				try {
 					
-					num1 = Integer.parseInt(textFieldNum1.getText());
-					num2 = Integer.parseInt(textFieldNum2.getText());
-					ans = num1 * num2;
-					finalAnswer = ans;
-					answer.setText(Float.toString(num1) + " * " + Float.toString(num2) + " = " + Float.toString(ans));
+					answer.setText(answer.getText() + " * ");
+					
+					index = answer.getText().toString().indexOf("*");
+					System.out.println("Index: " + index);
+					
+					if(index==1){
+						JOptionPane.showMessageDialog(null, "MUST ENTER 1st Number");
+						answer.setText("");
+					}
+					else{
+						num1 = Integer.parseInt(answer.getText().substring(0,index-1));
+						System.out.println("NUM1: " + num1);
+					}
 					
 				} catch (Exception e2) {
 					// TODO: handle exception
@@ -394,11 +426,19 @@ public class Application {
 				float ans;
 
 				try{
-					num1 = Integer.parseInt(textFieldNum1.getText());
-					num2 = Integer.parseInt(textFieldNum2.getText());
-					ans = num1 / num2;
-					finalAnswer = ans;
-					answer.setText(Float.toString(num1) + " / " + Float.toString(num2) + " = " + Float.toString(ans));
+					answer.setText(answer.getText() + " / ");
+					
+					index = answer.getText().toString().indexOf("/");
+					System.out.println("Index: " + index);
+					
+					if(index==1){
+						JOptionPane.showMessageDialog(null, "MUST ENTER 1st Number");
+						answer.setText("");
+					}
+					else{
+						num1 = Integer.parseInt(answer.getText().substring(0,index-1));
+						System.out.println("NUM1: " + num1);
+					}
 					
 				}
 				catch (Exception e1) {
@@ -422,14 +462,16 @@ public class Application {
 		zeroBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(roller == 0000){
-						textFieldNum1.setText("0");
-						roller = 21;
-					}
-					else{
-						textFieldNum2.setText("0");
-						roller = 0000;
-					}
+//					if(roller == 0000){
+//						textFieldNum1.setText("0");
+//						roller = 21;
+//					}
+//					else{
+//						textFieldNum2.setText("0");
+//						roller = 0000;
+//					}
+					answer.setText(answer.getText() +"0");
+
 				}
 				catch (Exception e1) {
 					// TODO: handle exception
@@ -447,10 +489,10 @@ public class Application {
 		btnClr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					roller = 0000;
-					textFieldNum1.setText(" ");
-					textFieldNum2.setText(" ");
-					answer.setText(" ");
+					//roller = 0000;
+					//textFieldNum1.setText(" ");
+					//textFieldNum2.setText(" ");
+					answer.setText("");
 				} catch (Exception e2) {
 					// TODO: handle exception
 					JOptionPane.showMessageDialog(null, "ERROR (CLR)");
@@ -460,8 +502,68 @@ public class Application {
 		btnClr.setBounds(339, 139, 84, 50);
 		frame.getContentPane().add(btnClr);
 		
+		JButton btnEnter = new JButton("ENTER");
+		btnEnter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+						if(answer.getText().contains("+")){
+						num2 = Integer.parseInt(answer.getText().substring(index+2,answer.getText().length()));
+						finalAnswer = num1 + num2;
+						answer.setText(answer.getText() + " = " + finalAnswer);
+						System.out.println("NUM2: " + num2);
+						answerStack.push(finalAnswer);
+					}
+					
+						if(answer.getText().contains("-")){
+						num2 = Integer.parseInt(answer.getText().substring(index+2,answer.getText().length()));
+						finalAnswer = num1 - num2;
+						answer.setText(answer.getText() + " = " + finalAnswer);
+						System.out.println("NUM2: " + num2);
+						answerStack.push(finalAnswer);
+						}
+						
+						if(answer.getText().contains("*")){
+							num2 = Integer.parseInt(answer.getText().substring(index+2,answer.getText().length()));
+							finalAnswer = num1 * num2;
+							answer.setText(answer.getText() + " = " + finalAnswer);
+							System.out.println("NUM2: " + num2);
+							answerStack.push(finalAnswer);
+							
+							}
+						
+						if(answer.getText().contains("/")){
+							num2 = Integer.parseInt(answer.getText().substring(index+2,answer.getText().length()));
+							finalAnswer = num1 / num2;
+							answer.setText(answer.getText() + " = " + finalAnswer);
+							System.out.println("NUM2: " + num2);
+							answerStack.push(finalAnswer);
+							}
+					
+					
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				
+			}
+		});
+		
+		btnEnter.setForeground(Color.BLACK);
+		btnEnter.setBounds(339, 22, 84, 50);
+		frame.getContentPane().add(btnEnter);
+		
+		JButton prevAnswer = new JButton("ANS");
+		prevAnswer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				answer.setText(answerStack.pop().toString());
+				
+			}
+		});
+		prevAnswer.setForeground(Color.BLACK);
+		prevAnswer.setBounds(339, 77, 84, 50);
+		frame.getContentPane().add(prevAnswer);
 		
 
 	
 	}
+
 }
